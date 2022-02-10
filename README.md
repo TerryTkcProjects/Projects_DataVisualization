@@ -6,4 +6,4 @@
 - Used of maps, timeline, bar charts extensively to present the data summary
 
 ### D3.js
-(https://myoctocat.com/assets/images/base-octocat.svg)
+(https://github.com/TerryTkcProjects/Projects_DataVisualization/blob/bb87beed560f66983979a1826f6f79d849541a8d/Visualizations/Visualization_1.png)
