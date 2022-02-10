@@ -11,3 +11,6 @@
   <img src="https://github.com/TerryTkcProjects/Projects_DataVisualization/blob/881306396716c4f90ef6d312f577fa1aac36313d/Visualizations/Visualization_2.png" width="300" /> 
   <img src="https://github.com/TerryTkcProjects/Projects_DataVisualization/blob/881306396716c4f90ef6d312f577fa1aac36313d/Visualizations/Visualziation_3.png" width="300" />
 </p>
+
+### Tableau
+<img src="https://github.com/TerryTkcProjects/Projects_DataVisualization/blob/af844c79be7489fae9aa9ca3e0d5b38e6e52d25d/Visualizations/Tableau%20Visualization_1.png" width="500" />
