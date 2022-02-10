@@ -5,3 +5,5 @@
 - Employed Tableau & D3.js to visualize the data creatively to impress the ultimate audience
 - Used of maps, timeline, bar charts extensively to present the data summary
 
+### D3.js
+(https://myoctocat.com/assets/images/base-octocat.svg)
