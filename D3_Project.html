@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  
+  <!-The layout is taken from http://stackoverflow.com/questions/12284044/how-to-split-page-into-4-equal-parts>
+  
+  <style>
+  html, body { height: 120%; padding: 0; margin: 0; }
+div { width: 70%; height: 50%; float: left; }
+#div1 { background: #DDD; }
+#div2 { background: #AAA; height: 15%;}
+#div3 { background: #DDD; }
+#div4 { background: #AAA; height: 30%;}
+#div5 { background: #DDD; }
+#div6 { background: #AAA; height: 15%;}
+  </style>
+  
+           <script src="http://d3js.org/d3.v4.min.js"></script>
+     <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+
+  
+  
+  </head>
+  <body>
+  
+  <div id="div1">
+  
+
+  
+    <script type="text/javascript">
+    var svg = dimple.newSvg("#div1", 590, 400);
+    d3.csv("data/Log.csv", function (data) {
+    
+      data = dimple.filterData(data, "Medium", "Reading");
+      data = dimple.filterData(data, "SCAP", ["Academic","Cultural","Professional","Social"]);
+    
+      var myChart = new dimple.chart(svg, data);
+      myChart.setBounds(95, 25, 475, 335)
+      myChart.addCategoryAxis("x", "SCAP");
+      myChart.addCategoryAxis("y", "Type");
+	  myChart.addSeries("Medium", dimple.plot.bubble);
+      myChart.addLegend(240, 10, 330, 20, "right");
+      myChart.draw();
+    });
+  </script>
+  
+  
+  
+  
+</div>
+<div id="div2">
+
+    <p>This visualization above shows the relationship between SCAP and Type when the medium is only 'Reading'.
+    	From the relationship, we can see that Academic involves in ALL type, meanwhile, Professional is ONLY about Tips.
+    	Cultural works for Tips, Links and Guide. Lastly, Social works for Tips, Links and List.
+    	</p>
+    <p>	Tips type are used in ALL four SCAP and Template us only used in Academic. </p>
+    	
+   <p> 	According the relationship above, we can see the pattern that how the reading type works with the reading SCAP.
+    
+    
+    </p>
+
+
+
+</div>
+<div id="div3">
+
+
+    <script type="text/javascript">
+    var svg2 = dimple.newSvg("#div3", 1000, 1000);
+    d3.csv("data/Log.csv", function (data) {
+    
+
+      data = dimple.filterData(data, "Resource", ["Popular-American-Social-Media", "Are-You-Ready-for-an-Online-Course?",
+      "Being-Mentally-Healthy", "Common-Grammar-Mistakes", "Making-Conversation"
+      ]);
+    
+    
+    
+    
+      var myChart = new dimple.chart(svg2, data);
+      myChart.setBounds(200, 50, 475, 335)
+      var x = myChart.addTimeAxis("x", "TimeStamp", "%m/%d/%Y %H:%M", "%d");
+      myChart.addCategoryAxis("y", "Resource");
+	  myChart.addSeries("Medium", dimple.plot.bubble);
+      myChart.addLegend(240, 10, 330, 20, "right");
+      myChart.draw();
+    });
+  </script>
+
+
+
+
+</div>
+<div id="div4">
+
+<p>The visualization shows the relationship between 'Medium', 'TimeStamp' and 'Resource'.</p>
+
+<p>To avoid the mess, I filter the resource. It only contains "Popular-American-Social-Media", "Are-You-Ready-for-an-Online-Course?",
+      "Being-Mentally-Healthy", "Common-Grammar-Mistakes", "Making-Conversation"</p>
+      
+      <p>
+      This visualization is useful when an analyzer wants to see which period having the most video or reading for a particular resource.
+      The analysis as below:
+      
+      </p>
+
+<ul>
+  <li>In 'Common-Grammar-Mistake', from 14 to 16, there is only Reading.</li>
+  <li>In 'Are-You-Ready-for-an-Online-Course?', from 13 to 19, most of the medium is using Video.</li>
+  <li>For 'Common-Grammar-Mistake', it is not having everyday lesson like 'Making-Conversation'.</li>
+  <li>No any section for 'Popular-American-Social-Media' in 19.</li>
+</ul> 
+
+</div>
+
+
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script>
+    var width = 960,
+      height = 500,
+      radius = Math.min(width, height) / 2;
+
+    var color = d3.scale.ordinal()
+      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+    var arc = d3.svg.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(radius - 70);
+
+    var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d) {
+        return d.values;
+      });
+
+    var svg3 = d3.select("body").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    d3.csv("data/Log.csv", function(error, data) {
+    
+    data = dimple.filterData(data, "Speaker", ["American Student","Career Advisor","International Student","Professor","University Health Services"]);
+    
+    
+      var data = d3.nest()
+        .key(function(d) {
+          return d.Speaker;
+        })
+        .rollup(function(v) { return v.length; })
+        .entries(data);
+        
+      var g = svg3.selectAll(".arc")
+        .data(pie(data))
+        .enter().append("g")
+        .attr("class", "arc");
+
+      g.append("path")
+        .attr("d", arc)
+        .style("fill", function(d) {
+          return color(d.data.key);
+        });
+
+      g.append("text")
+        .attr("transform", function(d) {
+          return "translate(" + arc.centroid(d) + ")";
+        })
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text(function(d) {
+          return d.data.key;
+        });
+
+    });
+  </script>
+
+
+
+
+<div id="div6">
+
+<p>The visualization shows the number of the speakers have been invited to make video.</p>
+
+<p>From the visualization, American Students gave the presentation the most. University Health Services and International Students gave the presentation the least.</p>
+
+
+</div>
+    
+  </body>
+</html>
